@@ -17,10 +17,16 @@ load_dotenv()
 
 def get_chat_engine():
     service_context = create_service_context()
+    ASTRA_DB_API_ENDPOINT = "https://00fa381d-0b17-48d9-867f-46f46b79d7ee-us-east1.apps.astra.datastax.com"
+    ASTRA_DB_APPLICATION_TOKEN = "AstraCS:uXNWwxBzqrDUKeQKSvYWQAqk:42e1913a74c32db60888dadb73f35fb9df184faf92bdf4390fa73db31b55e978"
+  
     # check if storage already exists
+#     astra_db_store = AstraDBVectorStore(
+#         token=os.getenv("ASTRA_DB_APPLICATION_TOKEN"),
+# 	api_endpoint=os.getenv("ASTRA_DB_API_ENDPOINT"),
     astra_db_store = AstraDBVectorStore(
-        token=os.getenv("ASTRA_DB_APPLICATION_TOKEN"),
-	api_endpoint=os.getenv("ASTRA_DB_API_ENDPOINT"),
+    token = ASTRA_DB_APPLICATION_TOKEN,
+    api_endpoint= ASTRA_DB_API_ENDPOINT,
 	collection_name="test",
 	embedding_dimension=1536,
     )
