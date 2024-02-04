@@ -9,6 +9,7 @@ import { JSONValue } from "ai";
 import OfferList from "./chat-offer-vertical-list";
 import { ChatOfferForm } from "./form/chat-offer-form";
 import { Button } from 'primereact/button';
+import Hero from "./hero";
 
 export enum Stage {
   SEARCHING,
@@ -79,8 +80,12 @@ export default function ChatMessages({
   stage: Stage;
   setStage: (stage: Stage) => void;
 }) {
-  const [offerListData, setOfferListData] = useState([
-    messages[0].data.propertyDetails, messages[0].data.propertyDetails, messages[0].data.propertyDetails
+  const addToFavorites = (propertyDetail: PropertyDetail) => {
+    setOfferListData([...offerListData, propertyDetail]);
+  };
+
+  const [offerListData, setOfferListData] = useState<PropertyDetail[]>([
+    // messages[0].data.propertyDetails, messages[0].data.propertyDetails, messages[0].data.propertyDetails
 
   ]);
 
@@ -104,8 +109,11 @@ export default function ChatMessages({
       <div className="flex flex-col gap-5 divide-y h-[50vh] overflow-scroll"
         ref={scrollableChatContainerRef}
       >
+        {stage === Stage.SEARCHING && (<Hero />)}
+
         {stage === Stage.VIEWING_DETAILS && messages.map((message: Message) => (
           <ChatItem
+            addToFavorites={addToFavorites}
             message={message}
           />
         ))}
@@ -121,11 +129,11 @@ export default function ChatMessages({
             <ChatOfferForm />
           </div>
         )}
-  <div
+  {/* <div
         onClick={() => setStage(stage + 1)}
         className="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 max-w-sm">
           Next
-        </div>
+        </div> */}
       </div>
     </div>
     </>

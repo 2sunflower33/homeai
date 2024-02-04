@@ -7,11 +7,12 @@ import MessageItemCard from "./message-item-card";
 
 export interface ChatItemProps {
   message: Message;
+  addToFavorites: (propertyDetail: PropertyDetail) => void;
 }
 
 
 export default function ChatItem(props: ChatItemProps) {
-  const { message } = props;
+  const { message, addToFavorites } = props;
 
   const textChatTemplate = (
     <>
@@ -22,16 +23,17 @@ export default function ChatItem(props: ChatItemProps) {
 
   const propertyDetails = message?.data?.propertyDetails as PropertyDetail[];
 
+
   return (
     <div className="flex items-start gap-4 pt-5">
-      {
+      {/* {
         message.content ? textChatTemplate : null
-      }
+      } */}
 
       <div className="flex flex-row space-x-4">
         {
           propertyDetails?.map((propertyDetail) =>
-            (<MessageItemCard {...propertyDetail} />))
+            (<MessageItemCard propertyDetail={propertyDetail} addToFavorites={addToFavorites}/>))
         }
       </div>
     </div>

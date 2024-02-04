@@ -66,7 +66,7 @@ export default function ChatSection() {
 
   return (
     <div className="space-y-4 max-w-5xl w-full">
-      <Hero />
+      {/* <Hero /> */}
       <ChatMessages
         messages={transformedMessages}
         isLoading={isLoading}
@@ -75,6 +75,11 @@ export default function ChatSection() {
         stage={currentStage}
         setStage={setStage}
       />
+        <div
+        onClick={() => setStage(currentStage + 1)}
+        className="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 max-w-sm">
+          Next
+        </div>
       <ChatAdvice
         keywords={keywords}
       />
