@@ -11,36 +11,29 @@ import MessageItemTable from "./message-item-table";
 import NavCard from "./nav-card";
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
+import { PropertyDetail } from '../../chat-section';
 
 export default function UnitDetail() {
 
     const [displayModal, setDisplayModal] = useState(false);
     const [position, setPosition] = useState('center');
 
-    const onHide = (name: string) => {
+    const onHide = () => {
         setDisplayModal(false);
     }
 
-    const renderFooter = (name: string) => {
+    const renderFooter = () => {
         return (
             <div>
-                <Button label="No" icon="pi pi-times" onClick={() => onHide(name)} className="p-button-text" />
-                <Button label="Yes" icon="pi pi-check" onClick={() => onHide(name)} autoFocus />
+                <Button label="No" icon="pi pi-times" onClick={() => onHide()} className="p-button-text" />
+                <Button label="Yes" icon="pi pi-check" onClick={() => onHide()} autoFocus />
             </div>
         );
     }
 
-    const onClick = () => {
-        setDisplayModal(true);
-
-        // if (position) {
-        //     setPosition('center');
-        // }
-    }
-
     return (
         <>
-            <Button label="Show" icon="pi pi-external-link" onClick={() => onClick()} />
+            {/* <Button label="Show" icon="pi pi-external-link" onClick={() => onClick()} /> */}
 
             <Dialog header="Header" visible={displayModal} modal={false} style={{ width: '50vw' }} footer={renderFooter('displayModal')} onHide={() => onHide('displayModal')}>
                 <p className="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco

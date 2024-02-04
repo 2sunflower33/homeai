@@ -13,8 +13,7 @@ export default function Hero() {
   return (
     <>
     <NavCard />
-    unit detail
-    <UnitDetail />
+    {/* <UnitDetail /> */}
     </>
   );
 }

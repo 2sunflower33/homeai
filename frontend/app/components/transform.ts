@@ -1,4 +1,5 @@
 import { JSONValue, Message } from "ai";
+import { PropertyDetail } from "./chat-section";
 
 export const isValidMessageData = (rawData: JSONValue | undefined) => {
   if (!rawData || typeof rawData !== "object") return false;
@@ -13,7 +14,9 @@ export const insertDataIntoMessages = (
   if (!data) return messages;
   messages.forEach((message, i) => {
     const rawData = data[i];
-    if (isValidMessageData(rawData)) message.data = rawData;
+    if (isValidMessageData(rawData)) {
+      message.data = rawData;
+    }
   });
   return messages;
 };
