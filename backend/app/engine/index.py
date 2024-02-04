@@ -5,40 +5,62 @@ from llama_index import (
     load_index_from_storage,
     VectorStoreIndex, SimpleDirectoryReader, ServiceContext,
 )
+from dotenv import load_dotenv
 from llama_index.llms import HuggingFaceLLM
 from pathlib import Path
 from llama_index import download_loader
-from app.engine.constants import STORAGE_DIR
+import logging
+import os
+from llama_index import (
+    StorageContext,
+    load_index_from_storage,
+    VectorStoreIndex, SimpleDirectoryReader, ServiceContext,
+)
+from llama_index.llms import HuggingFaceLLM
+from llama_index import download_loader
+from llama_index import VectorStoreIndex, SimpleDirectoryReader
+from llama_index.tools import QueryEngineTool, ToolMetadata
+from llama_index.query_engine import SubQuestionQueryEngine
+from llama_index.callbacks import CallbackManager, LlamaDebugHandler
+from llama_index import ServiceContext
+from llama_parse import LlamaParse  # pip install llama-parse
+from llama_index import SimpleDirectoryReader  # pip install llama-index
 from app.engine.context import create_service_context
 from llama_index.vector_stores import AstraDBVectorStore
-from dotenv import load_dotenv
 
-load_dotenv()
+service_context = create_service_context()
 
+parser = LlamaParse(
+    api_key=os.getenv("LLAMA_API_KEY"),  # can also be set in your env as LLAMA_CLOUD_API_KEY
+    result_type="markdown"  # "markdown" and "text" are available
+)
+file_extractor = {".pdf": parser}
+astra_db_store = AstraDBVectorStore(
+    token = os.getenv("ASTRA_DB_APPLICATION_TOKEN"),
+    api_endpoint= os.getenv("ASTRA_DB_API_ENDPOINT"),
+    collection_name="test",
+    embedding_dimension=1536,
+)
+query_engine_tools = []
+storage_context = StorageContext.from_defaults(vector_store=astra_db_store)
+for item in os.listdir("/Users/jingli/ragathon0203/homeai/backend/data/"):
+    documents = SimpleDirectoryReader(f'/Users/jingli/ragathon0203/homeai/backend/data/{item}', file_extractor=file_extractor).load_data()
+    vector_query_engine = VectorStoreIndex.from_documents(
+        documents, use_async=True, service_context=service_context,
+        storage_context=storage_context,
+        # documents, use_async=False, service_context=service_context
+    ).as_query_engine()
+    query_engine_tools.append(QueryEngineTool(
+        query_engine=vector_query_engine,
+        metadata=ToolMetadata(
+            name=item,
+            description=f"this is a disclosure for {item}",
+        ),
+    ))
+query_engine = SubQuestionQueryEngine.from_defaults(
+    query_engine_tools=query_engine_tools,
+    service_context=service_context,
+    use_async=True,
+)
 def get_chat_engine():
-    service_context = create_service_context()
-    ASTRA_DB_API_ENDPOINT = "https://00fa381d-0b17-48d9-867f-46f46b79d7ee-us-east1.apps.astra.datastax.com"
-    ASTRA_DB_APPLICATION_TOKEN = "AstraCS:uXNWwxBzqrDUKeQKSvYWQAqk:42e1913a74c32db60888dadb73f35fb9df184faf92bdf4390fa73db31b55e978"
-  
-    # check if storage already exists
-#     astra_db_store = AstraDBVectorStore(
-#         token=os.getenv("ASTRA_DB_APPLICATION_TOKEN"),
-# 	api_endpoint=os.getenv("ASTRA_DB_API_ENDPOINT"),
-    astra_db_store = AstraDBVectorStore(
-    token = ASTRA_DB_APPLICATION_TOKEN,
-    api_endpoint= ASTRA_DB_API_ENDPOINT,
-	collection_name="test",
-	embedding_dimension=1536,
-    )
-    PDFReader = download_loader("PDFReader")
-    loader = PDFReader()
-    documents = loader.load_data(file=Path('/Users/jingli/ragathon0203/homeai/backend/data/disclosure.pdf'))
-    logger = logging.getLogger("uvicorn")
-    # load the existing index
-    logger.info(f"Loading index from ...")
-    storage_context = StorageContext.from_defaults(vector_store=astra_db_store)
-    index = VectorStoreIndex.from_documents(
-        documents, storage_context=storage_context
-    )
-    logger.info(f"Finished loading index from ")
-    return index.as_chat_engine(similarity_top_k=5, chat_mode="condense_plus_context")
+    return query_engine
