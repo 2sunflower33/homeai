@@ -11,26 +11,30 @@ export interface MessageItemCardProps {
   addToFavorites: (propertyDetail: PropertyDetail) => void;
 }
 
-const mockData = [
-  {
-    title: "Des cadeaux incroyables prêts à être utilisés dans votre prochain projet",
-    description: "Lorem, ipsum dolor sit amet",
-    imgSrc: "https://picsum.photos/400/400",
-    link1: "https://example.com/link1",
-    link2: "https://example.com/link2",
-  },
-  {
-    title: "Another title",
-    description: "Another description",
-    imgSrc: "https://picsum.photos/400/400",
-    link1: "https://example.com/link3",
-    link2: "https://example.com/link4",
-  },
-];
+// const mockData = [
+//   {
+//     house_address: "Des cadeaux incroyables prêts à être utilisés dans votre prochain projet",
+//     description: "Lorem, ipsum dolor sit amet",
+//     imgSrc: "https://picsum.photos/400/400",
+//     link1: "https://example.com/link1",
+//     link2: "https://example.com/link2",
+//   },
+//   {
+//     house_address: "Another house_address",
+//     description: "Another description",
+//     imgSrc: "https://picsum.photos/400/400",
+//     link1: "https://example.com/link3",
+//     link2: "https://example.com/link4",
+//   },
+// ];
 
 export default function MessageItemCard({propertyDetail, addToFavorites}: MessageItemCardProps) {
 
-  const { title, description, imgSrc, link1, link2 } = mockData[0];
+  const { house_address} =  propertyDetail;
+
+  const imgSrc = "https://picsum.photos/400/400";
+  
+  // mockData[0];
 
   const [displayModal, setDisplayModal] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -77,7 +81,7 @@ const onClickIsLiked = (event: React.MouseEvent<HTMLAnchorElement>) => {
           </div>
         </div>
         <div className="bg-white py-4 px-3">
-          <h3 className="text-xs mb-2 font-medium">{title}</h3>
+          <h3 className="text-xs mb-2 font-medium">{house_address}</h3>
           <div className="flex justify-between items-center">
             <p className="text-xs text-gray-400">
               <div>
@@ -104,7 +108,6 @@ const onClickIsLiked = (event: React.MouseEvent<HTMLAnchorElement>) => {
       {
         <Dialog header="Header" visible={displayModal} modal={true} style={{ width: '80vw' }}
           footer={renderFooter()} onHide={() => onHide()}>
-          Unit detail
 
           <UnitDetail
             propertyDetail={propertyDetail}

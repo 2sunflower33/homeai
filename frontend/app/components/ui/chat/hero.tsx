@@ -12,8 +12,12 @@ export default function Hero() {
 
   return (
     <>
-    <NavCard />
-    {/* <UnitDetail /> */}
+      <div className="flex flex-row space-x-10 justify-center">
+
+        <NavCard />
+        <NavCard />
+      </div>
+      {/* <UnitDetail /> */}
     </>
   );
 }

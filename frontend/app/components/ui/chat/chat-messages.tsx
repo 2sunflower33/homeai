@@ -119,14 +119,14 @@ export default function ChatMessages({
         ))}
 
         {stage === Stage.LISTING_OFFER && (
-          <div>listing offer
+          <div>
             <OfferList propertyDetails={offerListData} />
           </div>
         )}
 
         {stage === Stage.WRITING_OFFER && (
-          <div>listing offer
-            <ChatOfferForm />
+          <div>
+            <ChatOfferForm offerHtmlStr="" />
           </div>
         )}
   {/* <div

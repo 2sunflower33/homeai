@@ -26,7 +26,9 @@ const Main = styled.div`
 
 export default function Table(tableDetail: TableProps) {
     const { propertyDetail, majorConcerns } = tableDetail;
-console.log("Table.tsx:27:tableDetail", tableDetail);
+
+    console.log("Table.tsx:27:tableDetail", tableDetail);
+
     const detailsData = [
         {
           category: "House address",
@@ -82,15 +84,15 @@ console.log("Table.tsx:27:tableDetail", tableDetail);
         <Main>
         <Column>
           <div ref={dropzoneRef} />
-          <Spacer size={3} />
+          {/* <Spacer size={3} /> */}
           {/* <Dropzone {...getRootProps({ isFocused, isDragAccept, isDragReject })}>
             <input {...getInputProps()} />
             <DropzoneContent state={state} selectedFiles={selectedFiles} />
           </Dropzone> */}
-          <Spacer size={3} />
+          {/* <Spacer size={3} /> */}
   
   
-          <Spacer size={10} />
+          {/* <Spacer size={10} /> */}
   
           {/* {state === "UPLOADED" && ( */}
             <Column ref={resultRef}>

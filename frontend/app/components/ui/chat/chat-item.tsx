@@ -10,7 +10,6 @@ export interface ChatItemProps {
   addToFavorites: (propertyDetail: PropertyDetail) => void;
 }
 
-
 export default function ChatItem(props: ChatItemProps) {
   const { message, addToFavorites } = props;
 
@@ -22,7 +21,6 @@ export default function ChatItem(props: ChatItemProps) {
   );
 
   const propertyDetails = message?.data?.propertyDetails as PropertyDetail[];
-
 
   return (
     <div className="flex items-start gap-4 pt-5">

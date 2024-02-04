@@ -50,14 +50,14 @@ export default function ChatSection() {
   const [currentStage, setStage] = useState(Stage.SEARCHING);
 
   console.log("ChatSection.tsx:52:currentStage", currentStage);
-  
+
   const selectKeyword = (keyword: string) => {
     const DELIMITER = " ";
     setInput(input + DELIMITER + keyword);
   }
 
   const keywords = [
-    {name: 'snack', content: 'no snack', onSelect: selectKeyword},
+    { name: 'snack', content: 'no snack', onSelect: selectKeyword },
   ];
 
   const transformedMessages = useMemo(() => {
@@ -75,11 +75,16 @@ export default function ChatSection() {
         stage={currentStage}
         setStage={setStage}
       />
-        <div
+      <div
         onClick={() => setStage(currentStage + 1)}
         className="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 max-w-sm">
-          Next
-        </div>
+        Next
+      </div>
+      <div
+        onClick={() => setStage(currentStage - 1)}
+        className="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 max-w-sm">
+        Prev
+      </div>
       <ChatAdvice
         keywords={keywords}
       />

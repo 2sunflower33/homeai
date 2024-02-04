@@ -1,9 +1,17 @@
 "use client";
 
+import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
+import "primereact/resources/primereact.min.css";                  //core css
+import "primeicons/primeicons.css";                                //icons
+
+import { useState } from "react";
 import { PropertyDetail } from "../../chat-section";
 import ChatAvatar from "./chat-avatar";
 import { Message } from "./chat-messages";
 import MessageItemCard from "./message-item-card";
+import { Button } from "primereact/button";
+import { Dialog } from 'primereact/dialog';
+import { ChatOfferForm } from "./form/chat-offer-form";
 
 export interface OfferListProps {
   propertyDetails: PropertyDetail[];
@@ -12,7 +20,26 @@ export interface OfferListProps {
 export default function OfferList({ propertyDetails }: OfferListProps) {
 
   // const propertyDetails = message?.data?.propertyDetails as PropertyDetail[];
+  const [displayModal, setDisplayModal] = useState(false);
 
+
+  const onShowDialog = () => {
+    setDisplayModal(true);
+  }
+
+  const onHide = () => {
+    setDisplayModal(false);
+  }
+
+  const renderFooter = () => {
+    return (
+
+      <div>
+        <Button label="No" icon="pi pi-times mr-2" onClick={() => onHide()} className="p-button-text" />
+        <Button label="Yes" icon="pi pi-check" onClick={() => onHide()} autoFocus />
+      </div>
+    );
+  }
   return (
     <>
       {propertyDetails.map((detail: PropertyDetail, index: number) => (
@@ -40,7 +67,9 @@ export default function OfferList({ propertyDetails }: OfferListProps) {
                   <button className="mt-5 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Download 1 page disclourse
                   </button>
-                  <button className="mt-5 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button
+                    onClick={() => setDisplayModal(true)}
+                    className="mt-5 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Make an offer
                   </button>
                 </div>
@@ -48,7 +77,12 @@ export default function OfferList({ propertyDetails }: OfferListProps) {
             </div>
           </div>
         </div>
-      ))}
+      ))
+      }
+      <Dialog header="Header" visible={displayModal} modal={true} style={{ width: '80vw' }}
+        footer={renderFooter()} onHide={() => onHide()}>
+        <ChatOfferForm />
+      </Dialog>
     </>
   );
 }
