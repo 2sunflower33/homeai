@@ -39,6 +39,7 @@ class _PropertyDetail(BaseModel):
 
 class _Result(BaseModel):
    property_detail: _PropertyDetail 
+   major_concerns: str
 
 @r.post("")
 async def chat(
@@ -57,7 +58,7 @@ async def chat(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Last message must be from user",
         )
-    house_str = lastMessage.content;
+    query_str = lastMessage.content;
     # latestMessage.content = "what's the answer of 2+2"
     # convert messages coming from the request to type ChatMessage
     # messages = [
@@ -74,7 +75,7 @@ async def chat(
         )
         for m in data.messages
     ]
-    house_detail_query = "Extract the following information for property" +  house_str + """
+    house_detail_query = "Extract the following information for property" +  query_str + """
 What’s its address?
 What’s the property tax?
 What’s the house size?
@@ -114,14 +115,18 @@ Provide ONLY a code block using markdown of the JSON response and no additional 
 }
 """
     # query chat engine
-    response = await chat_engine.achat(house_detail_query, messages)
+    # response = await chat_engine.achat(house_detail_query, messages)
     # response = await chat_engine.achat(lastMessage.content, messages)
     # response = await chat_engine.aquery(lastMessage.content)
     # nest_asyncio.apply()
     # response = chat_engine.query(lastMessage.content)
-    
+
+    response = await chat_engine.achat(house_detail_query, messages)
+    # response = await chat_engine.achat(lastMessage.content, messages)
+
+    logger = logging.getLogger("uvicorn")
+
     def strToDetailedInfo(input_str: str) -> _PropertyDetail:
-        logger = logging.getLogger("uvicorn")
         try:
             logger.info(f"$$$ input string: {input_str}")
             # Parse the JSON string into a Python dictionary
@@ -138,10 +143,8 @@ Provide ONLY a code block using markdown of the JSON response and no additional 
         
     # Convert the response to a DetailedInfo instance
     property_detail = strToDetailedInfo(response.response[7:-4])
-    
-    
-    
-    
+
     return _Result(
-        property_detail = property_detail
+        property_detail = property_detail,
+        major_concerns = "This is major concern"
     )
