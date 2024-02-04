@@ -7,6 +7,12 @@ import { ChatInput, ChatMessages } from "./ui/chat";
 import ChatAdvice from "./ui/chat/chat-advice";
 import Hero from "./ui/chat/hero";
 
+export enum Stage {
+  SEARCHING,
+  VIEWING_DETAILS,
+  LISTING_OFFER,
+  WRITING_OFFER,
+}
 
 interface Upgrade {
   year_of_upgrade: number;
@@ -41,6 +47,9 @@ export default function ChatSection() {
   });
 
   const [input, setInput] = useState('');
+  const [currentStage, setStage] = useState(Stage.SEARCHING);
+
+  console.log("ChatSection.tsx:52:currentStage", currentStage);
   
   const selectKeyword = (keyword: string) => {
     const DELIMITER = " ";
@@ -63,6 +72,8 @@ export default function ChatSection() {
         isLoading={isLoading}
         reload={reload}
         stop={stop}
+        stage={currentStage}
+        setStage={setStage}
       />
       <ChatAdvice
         keywords={keywords}

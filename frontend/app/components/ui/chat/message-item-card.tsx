@@ -34,7 +34,6 @@ export default function MessageItemCard(propertyDetail: PropertyDetail) {
     setDisplayModal(true);
   }
 
-
   const onHide = () => {
     setDisplayModal(false);
   }

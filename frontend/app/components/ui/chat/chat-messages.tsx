@@ -7,6 +7,8 @@ import MessageItemTable from "./message-item-table";
 import { PropertyDetail } from '../../chat-section';
 import { JSONValue } from "ai";
 import OfferList from "./chat-offer-vertical-list";
+import { ChatOfferForm } from "./form/chat-offer-form";
+import { Button } from 'primereact/button';
 
 export enum Stage {
   SEARCHING,
@@ -67,13 +69,16 @@ export default function ChatMessages({
   isLoading,
   reload,
   stop,
+  stage,
+  setStage,
 }: {
   messages: Message[];
   isLoading?: boolean;
   stop?: () => void;
   reload?: () => void;
+  stage: Stage;
+  setStage: (stage: Stage) => void;
 }) {
-  const [currentStage, setStage] = useState(Stage.LISTING_OFFER);
   const [offerListData, setOfferListData] = useState([
     messages[0].data.propertyDetails, messages[0].data.propertyDetails, messages[0].data.propertyDetails
 
@@ -94,26 +99,33 @@ export default function ChatMessages({
 
   return (
     <>
+    stage: {stage}
     <div className="w-full max-w-5xl p-4 bg-white rounded-xl shadow-xl">
       <div className="flex flex-col gap-5 divide-y h-[50vh] overflow-scroll"
         ref={scrollableChatContainerRef}
       >
-        {currentStage === Stage.VIEWING_DETAILS && messages.map((message: Message) => (
+        {stage === Stage.VIEWING_DETAILS && messages.map((message: Message) => (
           <ChatItem
             message={message}
           />
         ))}
 
-        {currentStage === Stage.LISTING_OFFER && (
+        {stage === Stage.LISTING_OFFER && (
           <div>listing offer
             <OfferList propertyDetails={offerListData} />
           </div>
         )}
 
-        {currentStage === Stage.WRITING_OFFER && (
-          <div>listing offer</div>
+        {stage === Stage.WRITING_OFFER && (
+          <div>listing offer
+            <ChatOfferForm />
+          </div>
         )}
-
+  <div
+        onClick={() => setStage(stage + 1)}
+        className="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 max-w-sm">
+          Next
+        </div>
       </div>
     </div>
     </>
