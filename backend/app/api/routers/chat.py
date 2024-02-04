@@ -57,10 +57,10 @@ async def chat(
         for m in data.messages
     ]
     # query chat engine
-    # response = await chat_engine.achat(lastMessage.content, messages)
+    response = await chat_engine.achat(lastMessage.content, messages)
     # response = await chat_engine.aquery(lastMessage.content)
     # nest_asyncio.apply()
-    response = chat_engine.query(lastMessage.content)
+    # response = chat_engine.query(lastMessage.content)
 
     return _Result(
         result=_Message(role=MessageRole.ASSISTANT, content=response.response, test=True)
