@@ -53,10 +53,10 @@ export default function MessageItemCard(propertyDetail: PropertyDetail) {
       <div
         onClick={() => onShowDialog()}
         className="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm">
-        <a href={link1} className="hover:text-orange-600 absolute z-30 top-2 right-0 mt-2 mr-3">
+        <a className="hover:text-orange-600 absolute z-30 top-2 right-0 mt-2 mr-3">
           {/* SVG */}
         </a>
-        <a href={link2} className="z-20 absolute h-full w-full top-0 left-0 ">&nbsp;</a>
+        <a className="z-20 absolute h-full w-full top-0 left-0 ">&nbsp;</a>
         <div className="h-auto overflow-hidden">
           <div className="h-44 overflow-hidden relative">
             {imgSrc && <img src={imgSrc} alt="" />}
@@ -88,7 +88,7 @@ export default function MessageItemCard(propertyDetail: PropertyDetail) {
 
 
       {
-        <Dialog header="Header" visible={displayModal} modal={false} style={{ width: '50vw' }} footer={renderFooter('displayModal')} onHide={() => onHide('displayModal')}>
+        <Dialog header="Header" visible={displayModal} modal={true} style={{ width: '50vw' }} footer={renderFooter('displayModal')} onHide={() => onHide('displayModal')}>
           Unit detail
 
           <UnitDetail />
