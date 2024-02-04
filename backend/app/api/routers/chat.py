@@ -1,3 +1,4 @@
+# import nest_asyncio
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -57,7 +58,10 @@ async def chat(
     ]
     # query chat engine
     # response = await chat_engine.achat(lastMessage.content, messages)
-    response = await chat_engine.aquery(lastMessage.content)
+    # response = await chat_engine.aquery(lastMessage.content)
+    # nest_asyncio.apply()
+    response = chat_engine.query(lastMessage.content)
+
     return _Result(
         result=_Message(role=MessageRole.ASSISTANT, content=response.response, test=True)
     )
