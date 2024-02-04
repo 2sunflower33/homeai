@@ -5,7 +5,13 @@ import ChatAvatar from "./chat-avatar";
 import { Message } from "./chat-messages";
 import MessageItemCard from "./message-item-card";
 
-export default function ChatItem(message: Message) {
+export interface ChatItemProps {
+  message: Message;
+}
+
+
+export default function ChatItem(props: ChatItemProps) {
+  const { message } = props;
 
   const textChatTemplate = (
     <>
@@ -23,14 +29,11 @@ export default function ChatItem(message: Message) {
       }
 
       <div className="flex flex-row space-x-4">
-
         {
           propertyDetails?.map((propertyDetail) =>
             (<MessageItemCard {...propertyDetail} />))
         }
       </div>
-
-
     </div>
   );
 }

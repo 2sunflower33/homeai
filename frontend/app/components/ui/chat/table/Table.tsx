@@ -8,6 +8,10 @@ import { Row } from "./Row";
 import { PropertyDetail } from "@/app/components/chat-section";
 // import { CSVLink } from "react-csv";
 
+interface TableProps {
+    propertyDetail: PropertyDetail;
+    majorConcerns: any[];
+  }
 
 const HScroll = styled.div`
   width: 100%;
@@ -20,45 +24,47 @@ const Main = styled.div`
   max-width: 1200px;
 `;
 
-export default function Table(PropertyDetail: PropertyDetail, majorConcerns: any[]) {
-
+export default function Table(tableDetail: TableProps) {
+    const { propertyDetail, majorConcerns } = tableDetail;
+console.log("Table.tsx:27:tableDetail", tableDetail);
     const detailsData = [
         {
           category: "House address",
-          details: PropertyDetail["house_address"],
+          details: propertyDetail["house_address"],
         },
         {
           category: "Property tax",
-          details: PropertyDetail["property_tax"],
+          details: propertyDetail["property_tax"],
         },
         {
           category: "House size",
-          details: PropertyDetail["house_size"],
+          details: propertyDetail["house_size"],
         },
         {
           category: "Lot size",
-          details: PropertyDetail["lot_size"],
+          details: propertyDetail["lot_size"],
         },
         {
           category: "Bedrooms",
-          details: PropertyDetail["bedroom_numbers"],
+          details: propertyDetail["bedroom_numbers"],
         },
         {
           category: "Bathroom",
-          details: PropertyDetail["bathroom_numbers"],
+          details: propertyDetail["bathroom_numbers"],
         },
-        {
-          category: "Upgrades",
-          details: PropertyDetail["upgrades"].reduce((acc, curr) => {
-            return (
-              acc +
-              `- ${curr.year_of_upgrade}: ${curr.what_was_done} [permit: ${
-                curr.does_it_has_permit ? "yes" : "no"
-              }]<br />`
-            );
-          }, ""),
-        },
+        // {
+        //   category: "Upgrades",
+        //   details: propertyDetail["upgrades"].reduce((acc, curr) => {
+        //     return (
+        //       acc +
+        //       `- ${curr.year_of_upgrade}: ${curr.what_was_done} [permit: ${
+        //         curr.does_it_has_permit ? "yes" : "no"
+        //       }]<br />`
+        //     );
+        //   }, ""),
+        // },
       ];
+      console.log("Table.tsx:67:detailsData", detailsData);
     const detailsDataHeaders = ["Category", "Details"];
     const dropzoneRef = useRef<HTMLDivElement>(null);
     const resultRef = useRef<HTMLDivElement>(null);
@@ -105,9 +111,11 @@ export default function Table(PropertyDetail: PropertyDetail, majorConcerns: any
                     </tr>
                   </thead>
                   <tbody>
+                    
                     {detailsData.map((entry) => (
                       <tr key={entry.category}>
                         <td>{entry.category}</td>
+                        {/* JSON.stringify: {JSON.stringify(entry, null, 2)} */}
                         <td
                           dangerouslySetInnerHTML={{
                             __html: entry.details.toString(),

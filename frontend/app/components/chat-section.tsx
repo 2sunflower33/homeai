@@ -24,33 +24,6 @@ export interface PropertyDetail {
   upgrades: Upgrade[];
 }
 
-const propertyDetails: PropertyDetail[] = [{
-  house_address: "123 Oak Street, Springfield, IL",
-  property_tax: 4500.00,
-  house_size: "2000 sq ft",
-  lot_size: "0.5 acres",
-  bedroom_numbers: 4,
-  bathroom_numbers: 3,
-  upgrades: [
-    {
-      year_of_upgrade: 2018,
-      what_was_done: "Kitchen Remodel",
-      does_it_has_permit: true
-    },
-    {
-      year_of_upgrade: 2020,
-      what_was_done: "Roof Replacement",
-      does_it_has_permit: true
-    },
-    {
-      year_of_upgrade: 2022,
-      what_was_done: "New HVAC System",
-      does_it_has_permit: false
-    }
-  ]
-}];
-
-
 export default function ChatSection() {
   const {
     messages,

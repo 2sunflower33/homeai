@@ -88,10 +88,13 @@ export default function MessageItemCard(propertyDetail: PropertyDetail) {
 
 
       {
-        <Dialog header="Header" visible={displayModal} modal={true} style={{ width: '50vw' }} footer={renderFooter('displayModal')} onHide={() => onHide('displayModal')}>
+        <Dialog header="Header" visible={displayModal} modal={true} style={{ width: '80vw' }} 
+          footer={renderFooter()} onHide={() => onHide()}>
           Unit detail
 
-          <UnitDetail />
+          <UnitDetail
+            propertyDetail={propertyDetail}
+          />
         </Dialog>
 
       }
