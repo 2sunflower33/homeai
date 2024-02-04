@@ -80,6 +80,12 @@ export default function ChatSection() {
         className="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 max-w-sm">
           Next
         </div>
+        <div
+        onClick={() => setStage(currentStage-1)}
+        className="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 max-w-sm">
+          Pre
+        </div>
+        
       <ChatAdvice
         keywords={keywords}
       />
