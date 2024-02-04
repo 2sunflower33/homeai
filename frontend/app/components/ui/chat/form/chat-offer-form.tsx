@@ -69,19 +69,19 @@ const markdownHtml2 = (<div dangerouslySetInnerHTML={{ __html: `<pre><code># Cal
                             <Field name="name" render={({ input, meta }) => (
                                 <div className="field">
                                     <label htmlFor="name" className='block'>What are the fullname of buyers?</label>
-                                    <InputText id="name" {...input} autoFocus className="border border-gray-300 rounded block" />
+                                    <InputText id="name"  defaultValue="Yina Qiao" autoFocus className="border border-gray-300 rounded block" />
                                 </div>
                             )} />
                             <Field name="name" render={({ input, meta }) => (
                                 <div className="field">
                                     <label htmlFor="name" className='block'>Are there co-owners involved in this transaction? full names?</label>
-                                    <InputText id="name" {...input} autoFocus className="border border-gray-300 rounded block" />
+                                    <InputText id="name" defaultValue="No" autoFocus className="border border-gray-300 rounded block" />
                                 </div>
                             )} />
                             <Field name="name" render={({ input, meta }) => (
                                 <div className="field">
                                     <label htmlFor="name" className='block'>Should any party be listed with a specific title (e.g., as a trustee)?</label>
-                                    <InputText id="name" {...input} autoFocus className="border border-gray-300  rounded block" />
+                                    <InputText id="name" defaultValue="No" autoFocus className="border border-gray-300  rounded block" />
                                 </div>
                             )} />
 
@@ -89,7 +89,7 @@ const markdownHtml2 = (<div dangerouslySetInnerHTML={{ __html: `<pre><code># Cal
                             <Field name="name" render={({ input, meta }) => (
                                 <div className="field">
                                     <label htmlFor="name" className='block'>What purchase price are you offering? </label>
-                                    <InputText id="name" {...input} autoFocus className="border border-gray-300 rounded block" />
+                                    <InputText id="name" defaultValue="$1,650,000" autoFocus className="border border-gray-300 rounded block" />
                                 </div>
                             )} />
 

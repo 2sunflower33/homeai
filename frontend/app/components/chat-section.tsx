@@ -49,7 +49,7 @@ export default function ChatSection() {
   const [input, setInput] = useState('');
   const [currentStage, setStage] = useState(Stage.SEARCHING);
 
-  console.log("ChatSection.tsx:52:currentStage", currentStage);
+  // console.log("ChatSection.tsx:52:currentStage", currentStage);
   
   const selectKeyword = (keyword: string) => {
     const DELIMITER = " ";
@@ -57,7 +57,9 @@ export default function ChatSection() {
   }
 
   const keywords = [
-    {name: 'snack', content: 'no snack', onSelect: selectKeyword},
+    {name: 'No Termite', content: 'no snack', onSelect: selectKeyword},
+    {name: 'No Legal Issue', content: 'no snack', onSelect: selectKeyword},
+    {name: 'No Environment Risk', content: 'no snack', onSelect: selectKeyword},
   ];
 
   const transformedMessages = useMemo(() => {
@@ -75,16 +77,16 @@ export default function ChatSection() {
         stage={currentStage}
         setStage={setStage}
       />
-        <div
+        <span
         onClick={() => setStage(currentStage + 1)}
         className="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 max-w-sm">
           Next
-        </div>
-        <div
+        </span>
+        {/* <span
         onClick={() => setStage(currentStage-1)}
         className="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 max-w-sm">
           Pre
-        </div>
+        </span> */}
         
       <ChatAdvice
         keywords={keywords}

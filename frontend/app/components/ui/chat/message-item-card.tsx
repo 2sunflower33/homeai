@@ -9,6 +9,8 @@ import { Button } from 'primereact/button';
 export interface MessageItemCardProps {
   propertyDetail: PropertyDetail;
   addToFavorites: (propertyDetail: PropertyDetail) => void;
+  imgSrc: string;
+  majorConcerns?: any[];
 }
 
 // const mockData = [
@@ -28,11 +30,9 @@ export interface MessageItemCardProps {
 //   },
 // ];
 
-export default function MessageItemCard({propertyDetail, addToFavorites}: MessageItemCardProps) {
+export default function MessageItemCard({propertyDetail, addToFavorites, imgLink, majorConcerns}: MessageItemCardProps) {
 
   const { house_address} =  propertyDetail;
-
-  const imgSrc = "https://picsum.photos/400/400";
 
   const [displayModal, setDisplayModal] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -75,7 +75,7 @@ const onClickIsLiked = (event: React.MouseEvent<HTMLAnchorElement>) => {
         <a className="z-20 absolute h-full w-full top-0 left-0 ">&nbsp;</a>
         <div className="h-auto overflow-hidden">
           <div  className="h-44 overflow-hidden relative">
-            {imgSrc && <img src={imgSrc} alt="" />}
+            {imgLink && <img src={imgLink} alt="" />}
           </div>
         </div>
         <div className="bg-white py-4 px-3">
@@ -104,11 +104,11 @@ const onClickIsLiked = (event: React.MouseEvent<HTMLAnchorElement>) => {
 
 
       {
-        <Dialog header="Header" visible={displayModal} modal={true} style={{ width: '80vw' }}
+        <Dialog header="Property Details" visible={displayModal} modal={true} style={{ width: '80vw' }}
           footer={renderFooter()} onHide={() => onHide()}>
 
           <UnitDetail
-            propertyDetail={propertyDetail}
+            propertyDetail={propertyDetail} majorConcerns={majorConcerns}
           />
         </Dialog>
 

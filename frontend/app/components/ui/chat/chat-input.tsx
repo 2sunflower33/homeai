@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 export interface ChatInputProps {
   /** The current value of the input */
   input?: string;
@@ -27,7 +29,7 @@ export default function ChatInput(props: ChatInputProps) {
           name="message"
           placeholder="Type a message"
           className="w-full p-4 rounded-xl shadow-inner flex-1"
-          value={props.input}
+          value={"Check nice houses in Bay Area."}
           onChange={props.handleInputChange}
         />
         <button
